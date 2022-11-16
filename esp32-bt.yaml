@@ -1,0 +1,78 @@
+esphome:
+  name: esp32-bt
+
+esp32:
+  board: nodemcu-32s
+  framework:
+    type: arduino
+
+# Enable logging
+logger:
+
+# Enable Home Assistant API
+api:
+  encryption:
+    key: "IwUQv5JSW597zyxH6Mjgq+XjHNHxTWRjpUsyqZ8gpfs="
+
+ota:
+  password: "01e5d1154289d6f6a8c9a176d77baba1"
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+
+  # Enable fallback hotspot (captive portal) in case wifi connection fails
+  ap:
+    ssid: "Esp32-Bt Fallback Hotspot"
+    password: "0knVJoiPYaAn"
+
+captive_portal:
+    
+bluetooth_proxy:
+
+# Temp sensor 1 for soil temp  
+dallas:
+  - pin: GPIO27
+    update_interval: 30s
+
+# Status lights
+switch:
+  - platform: gpio
+    pin: GPIO33
+    name: "Green Led"
+  - platform: gpio
+    pin: GPIO32
+    name: "Red Led"
+  
+
+# This is where all the sensors go
+sensor:
+# Black Sleeved Dallas temp sensor
+  - platform: dallas
+    address: 0x8e000000026d2428
+    name: "Garage Lightroom Citrus Temp"
+    
+
+# DHT11 sensor top shelf
+  - platform: dht
+    pin: GPIO25
+    temperature: 
+      name: "Garage Lightroom Temperature"
+    humidity:
+      name: "Garage Lightroom Humidity"
+    update_interval: 30s
+    model: DHT11
+
+
+# LED PWN part
+output:
+  - platform: ledc
+    pin: GPIO26
+    id: gpio_26
+    frequency: 1220Hz
+
+# HomeAssistant part
+light:
+  - platform: monochromatic
+    output: gpio_26
+    name: "Garage Lightroom Citrus LED"
