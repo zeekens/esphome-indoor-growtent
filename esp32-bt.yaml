@@ -38,10 +38,10 @@ dallas:
 # Status lights
 switch:
   - platform: gpio
-    pin: GPIO33
+    pin: 33
     name: "Green Led"
   - platform: gpio
-    pin: GPIO32
+    pin: 32
     name: "Red Led"
   
 
@@ -55,7 +55,7 @@ sensor:
 
 # DHT11 sensor top shelf
   - platform: dht
-    pin: GPIO25
+    pin: 25
     temperature: 
       name: "Garage Lightroom Temperature"
     humidity:
@@ -67,7 +67,7 @@ sensor:
 # LED PWN part
 output:
   - platform: ledc
-    pin: GPIO26
+    pin: 26
     id: gpio_26
     frequency: 1220Hz
 
